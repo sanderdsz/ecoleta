@@ -1,7 +1,7 @@
 <h3 align="center">
     <img alt="Logo" title="#logo" width="300px" src=".github/logo.png">
     <br><br>
-    <b>Recycle and save the enviroment</b> 
+    <b>Recycle and save the environment</b> 
 </h3>
 
 # Index
@@ -15,13 +15,14 @@
 
 ## :bookmark: About
 
-The <strong>Ecoleta</strong> is and web and mobile app made to help our community to share and find recycle locations.
+The <strong>Ecoleta</strong> is a web and mobile app made to help our community to share and find recycle locations.
 
 <a id="documentation"></a>
 
+<!--
 ## :books: Documentation
-
 Check the **[DOCUMENTATION](DOCUMENTATION.md)** to know how to use the basic commands for **TypeScript**, **Node**, **ReactJS** and **React Native**.
+-->
 
 <a id="tech-used"></a>
 
