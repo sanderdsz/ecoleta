@@ -4,7 +4,7 @@
     <b>Recycle and save the enviroment</b> 
 </h3>
 
-# Índice
+# Index
 
 - [About](#about)
 - [Documentation](#documentation)
@@ -14,8 +14,6 @@
 <a id="about"></a>
 
 ## :bookmark: About
-
-The <strong>Ecoleta</strong> é uma aplicação Web e Mobile para ajudar pessoas a encontrarem pontos de coleta para reciclagem.
 
 The <strong>Ecoleta</strong> is and web and mobile app made to help our community to share and find recycle locations.
 
