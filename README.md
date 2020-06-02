@@ -7,7 +7,7 @@
 # Index
 
 - [About](#about)
-- [Documentation](#documentation)
+<!--- [Documentation](#documentation)-->
 - [Tech Used](#tech-used)
 - [How-to](#how-to)
 
