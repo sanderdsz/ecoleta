@@ -1,14 +1,10 @@
-import express from "express";
+import express, { request, response } from "express";
+import routes from "./routes";
 
 const app = express();
 
-app.get("/users", (request, response) => {
-  console.log("Hello world!");
+app.use(express.json());
 
-  // JSON
-
-  // Método de retorno prinicipal da api
-  response.json("Hello world! Hey, Sander.");
-});
+app.use(routes);
 
 app.listen(3333);
