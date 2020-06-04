@@ -1,8 +1,9 @@
-import React, { useEffect, useState, ChangeEvent } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState, ChangeEvent, FormEvent } from "react";
+import { Link, useHistory } from "react-router-dom";
 import { Map, TileLayer, Marker } from "react-leaflet";
 import api from "../../services/api";
 import axios from "axios";
+import { LeafletMouseEvent } from "leaflet";
 
 import "./styles.css";
 import logo from "../../assets/logo.svg";
@@ -23,13 +24,42 @@ interface IBGECityResponse {
 }
 
 const CreatePoint = () => {
+  // Armazenamento dos items cadastrados na API
   const [items, setItems] = useState<Item[]>([]);
-  const [ufs, setUfs] = useState<string[]>([]);
   // Armazenamento da seleção de UF
+  const [ufs, setUfs] = useState<string[]>([]);
   const [selectedUf, SetSelectedUf] = useState("0");
   // Armazenamento das cidades
   const [cities, setCities] = useState<string[]>([]);
   const [selectedCity, setSelectedCity] = useState("0");
+  // Posição inicial do leaflet map quando abre a página
+  const [initialPosition, setInitialPosition] = useState<[number, number]>([
+    0,
+    0,
+  ]);
+  // Armazentamento da posição no leaflet map
+  const [selectedPosition, setSelectedPosition] = useState<[number, number]>([
+    0,
+    0,
+  ]);
+  // Armanzenamento das informações nos inputs
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    whatsapp: "",
+  });
+  // Armazena os itens selecionados
+  const [selectedItems, setSelectedItems] = useState<number[]>([]);
+  // Retorna usuário à página principal
+  const history = useHistory();
+
+  // Estado para posição do map ao abrir a página
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      const { latitude, longitude } = position.coords;
+      setInitialPosition([latitude, longitude]);
+    });
+  }, []);
 
   // @get da API
   useEffect(() => {
@@ -54,16 +84,16 @@ const CreatePoint = () => {
   useEffect(() => {
     if (selectedUf === "0") {
       return;
+    } else {
+      axios
+        .get<IBGECityResponse[]>(
+          `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${selectedUf}/municipios`
+        )
+        .then((response) => {
+          const cityNames = response.data.map((city) => city.nome);
+          setCities(cityNames);
+        });
     }
-
-    axios
-      .get<IBGECityResponse[]>(
-        `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${selectedUf}/municipios`
-      )
-      .then((response) => {
-        const cityNames = response.data.map((city) => city.nome);
-        setCities(cityNames);
-      });
   }, [selectedUf]);
 
   // Função que cuida da seleção do UF
@@ -78,6 +108,59 @@ const CreatePoint = () => {
     setSelectedCity(city);
   }
 
+  // Função de seleção no mapa
+  function handleMapClick(event: LeafletMouseEvent) {
+    setSelectedPosition([event.latlng.lat, event.latlng.lng]);
+  }
+
+  // Função que guarda os inputs
+  function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
+    const { name, value } = event.target;
+    setFormData({
+      // Mantém os dados existentes
+      ...formData,
+      [name]: value,
+    });
+  }
+
+  // Função armazena o estado dos itens selecionados
+  function handleSelectItem(id: number) {
+    // Retorna um numero acima ou igual 0 se o item já está no array
+    // Verifica se há um item === id na lista dentro do array
+    const alreadySelected = selectedItems.findIndex((item) => item === id);
+    if (alreadySelected >= 0) {
+      // Contém todos os itens menos o que deseja remover
+      const filteredItems = selectedItems.filter((item) => item !== id);
+      setSelectedItems(filteredItems);
+    } else {
+      // Adiciona item no array
+      setSelectedItems([...selectedItems, id]);
+    }
+  }
+
+  // Função de post do registro
+  async function handleSubmit(event: FormEvent) {
+    event.preventDefault();
+    const { name, email, whatsapp } = formData;
+    const uf = selectedUf;
+    const city = selectedCity;
+    const [latitude, longitude] = selectedPosition;
+    const items = selectedItems;
+    const data = {
+      name,
+      email,
+      whatsapp,
+      uf,
+      city,
+      latitude,
+      longitude,
+      items,
+    };
+    await api.post("points", data);
+    alert("Pick-up spot registred");
+    history.push("/");
+  }
+
   return (
     <div id="page-create-point">
       <header>
@@ -88,7 +171,7 @@ const CreatePoint = () => {
         </Link>
       </header>
 
-      <form>
+      <form onSubmit={handleSubmit}>
         <h1>Pick-up spot registration</h1>
 
         <fieldset>
@@ -99,17 +182,32 @@ const CreatePoint = () => {
 
         <div className="field">
           <label htmlFor="name">Entity name</label>
-          <input type="text" name="name" id="name" />
+          <input
+            type="text"
+            name="name"
+            id="name"
+            onChange={handleInputChange}
+          />
         </div>
 
         <div className="field-group">
           <div className="field">
             <label htmlFor="email">E-mail</label>
-            <input type="email" name="email" id="email" />
+            <input
+              type="email"
+              name="email"
+              id="email"
+              onChange={handleInputChange}
+            />
           </div>
           <div className="field">
             <label htmlFor="name">Whatsapp</label>
-            <input type="text" name="whatsapp" id="whatsapp" />
+            <input
+              type="text"
+              name="whatsapp"
+              id="whatsapp"
+              onChange={handleInputChange}
+            />
           </div>
         </div>
 
@@ -119,12 +217,12 @@ const CreatePoint = () => {
             <span>Select your address on the map</span>
           </legend>
 
-          <Map center={[-28.5201796, -49.3227657]} zoom={15}>
+          <Map center={initialPosition} zoom={15} onClick={handleMapClick}>
             <TileLayer
               attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            <Marker position={[-28.5201796, -49.3227657]} />
+            <Marker position={selectedPosition} />
           </Map>
 
           <div className="field-group">
@@ -171,7 +269,11 @@ const CreatePoint = () => {
           <ul className="items-grid">
             {items.map((item) => {
               return (
-                <li key={item.id}>
+                <li
+                  key={item.id}
+                  onClick={() => handleSelectItem(item.id)}
+                  className={selectedItems.includes(item.id) ? "selected" : ""}
+                >
                   <img src={item.image_url} alt={item.title} />
                   <span>{item.title}</span>
                 </li>
