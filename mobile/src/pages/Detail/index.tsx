@@ -1,8 +1,62 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { Feather as Icon, FontAwesome } from "@expo/vector-icons";
+import Constants from "expo-constants";
+import { useNavigation } from "@react-navigation/native";
+import { RectButton } from "react-native-gesture-handler";
+import {
+  Image,
+  SafeAreaView,
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+} from "react-native";
 
 const Detail = () => {
-  return <View style={styles.container} />;
+  // Navegação
+  const navigation = useNavigation();
+  function handleNavigateBack() {
+    navigation.goBack();
+  }
+
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <TouchableOpacity>
+          <Icon
+            name="arrow-left"
+            size={20}
+            color="#34cb79"
+            onPress={handleNavigateBack}
+          />
+        </TouchableOpacity>
+
+        <Image
+          style={styles.pointImage}
+          source={{
+            uri:
+              "https://c8.alamy.com/comp/BYP8C2/recycling-bank-for-bottles-cans-paper-and-plastics-at-a-branch-of-BYP8C2.jpg",
+          }}
+        />
+        <Text style={styles.pointName}>Mercadão Bão</Text>
+        <Text style={styles.pointItems}>Lâmpadas</Text>
+        <View style={styles.address}>
+          <Text style={styles.addressTitle}>Address</Text>
+          <Text style={styles.addressContent}>Urussanga, SC</Text>
+        </View>
+      </View>
+      <View style={styles.footer}>
+        <RectButton style={styles.button} onPress={() => {}}>
+          <FontAwesome name="whatsapp" size={20} color="#fff" />
+          <Text style={styles.buttonText}>whatsapp</Text>
+        </RectButton>
+        <RectButton style={styles.button} onPress={() => {}}>
+          <Icon name="mail" size={20} color="#fff" />
+          <Text style={styles.buttonText}>e-mail</Text>
+        </RectButton>
+      </View>
+    </SafeAreaView>
+  );
 };
 
 export default Detail;
@@ -11,7 +65,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 32,
-    paddingTop: 20,
+    paddingTop: 20 + Constants.statusBarHeight,
   },
 
   pointImage: {
