@@ -6,7 +6,6 @@
 
 <h1 align="center">
     <img alt="Web" src=".github/VideoWeb.gif" width="900px">
-    **[Figma](https://www.figma.com/file/1SxgOMojOB2zYT0Mdk28lB/)**
 </h1>
 
 # Index
