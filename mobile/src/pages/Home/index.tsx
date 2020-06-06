@@ -1,39 +1,78 @@
-import React from "react";
-import { Image, ImageBackground, StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
 import { RectButton } from "react-native-gesture-handler";
 import { Feather as Icon } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import {
+  Image,
+  ImageBackground,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 
 const Home = () => {
-  // Navegação
+  const [uf, setUf] = useState("");
+  const [city, setCity] = useState("");
   const navigation = useNavigation();
+
+  // Navegação
   function handleNavigateToPoints() {
-    navigation.navigate("Points");
+    navigation.navigate("Points", {
+      uf,
+      city,
+    });
   }
 
-  return (
-    <ImageBackground
-      source={require("../../assets/home-background.png")}
-      style={styles.container}
-      imageStyle={{ width: 274, height: 368 }}
-    >
-      <View style={styles.main}>
-        <Image source={require("../../assets/logo.png")} />
-        <Text style={styles.title}>Your waste pick-up marketplace</Text>
-        <Text style={styles.description}>
-          We help your community to find pick-up spots efficient
-        </Text>
-      </View>
+  // Seleção do UF e city
 
-      <View style={styles.footer}>
-        <RectButton style={styles.button} onPress={handleNavigateToPoints}>
-          <View style={styles.buttonIcon}>
-            <Icon name="arrow-right" color="#fff" size={24} />
-          </View>
-          <Text style={styles.buttonText}>Enter</Text>
-        </RectButton>
-      </View>
-    </ImageBackground>
+  return (
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+    >
+      <ImageBackground
+        source={require("../../assets/home-background.png")}
+        style={styles.container}
+        imageStyle={{ width: 274, height: 368 }}
+      >
+        <View style={styles.main}>
+          <Image source={require("../../assets/logo.png")} />
+          <Text style={styles.title}>Your waste pick-up marketplace</Text>
+          <Text style={styles.description}>
+            We help your community to find pick-up spots efficient
+          </Text>
+        </View>
+
+        <View style={styles.footer}>
+          <TextInput
+            style={styles.input}
+            placeholder="Type your UF"
+            value={uf}
+            maxLength={2}
+            autoCapitalize="characters"
+            autoCorrect={false}
+            onChangeText={setUf}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Type your city"
+            value={city}
+            autoCorrect={false}
+            onChangeText={(text) => setCity(text)}
+          />
+
+          <RectButton style={styles.button} onPress={handleNavigateToPoints}>
+            <View style={styles.buttonIcon}>
+              <Icon name="arrow-right" color="#fff" size={24} />
+            </View>
+            <Text style={styles.buttonText}>Enter</Text>
+          </RectButton>
+        </View>
+      </ImageBackground>
+    </KeyboardAvoidingView>
   );
 };
 
