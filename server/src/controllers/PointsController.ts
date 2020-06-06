@@ -57,12 +57,13 @@ class PointsController {
       city,
       items,
       uf,
-      image,
     } = request.body;
 
+    // Algoritmo para não conflitar entre queries relacionais
+    const transaction = await knex.transaction();
     // Short syntax
     const point = {
-      image,
+      image: "upload",
       name,
       email,
       whatsapp,
@@ -71,9 +72,6 @@ class PointsController {
       city,
       uf,
     };
-
-    // Algoritmo para não conflitar entre queries relacionais
-    const transaction = await knex.transaction();
 
     const insertedIds = await transaction("points").insert(point);
 
