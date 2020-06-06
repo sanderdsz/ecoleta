@@ -57,11 +57,12 @@ class PointsController {
       city,
       items,
       uf,
+      image,
     } = request.body;
 
     // Short syntax
     const point = {
-      image: "image-fake",
+      image,
       name,
       email,
       whatsapp,

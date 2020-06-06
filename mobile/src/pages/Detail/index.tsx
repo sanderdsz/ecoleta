@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Feather as Icon, FontAwesome } from "@expo/vector-icons";
 import Constants from "expo-constants";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { RectButton } from "react-native-gesture-handler";
+import api from "../../services/api";
+import * as MailComposer from "expo-mail-composer";
 import {
   Image,
+  Linking,
   SafeAreaView,
   StyleSheet,
   View,
@@ -12,11 +15,59 @@ import {
   TouchableOpacity,
 } from "react-native";
 
+interface Params {
+  point_id: number;
+}
+
+interface Data {
+  point: {
+    image: string;
+    name: string;
+    email: string;
+    whatsapp: string;
+    city: string;
+    uf: string;
+  };
+  items: {
+    title: string;
+  }[];
+}
+
 const Detail = () => {
-  // Navegação
   const navigation = useNavigation();
+  const route = useRoute();
+  const routeParams = route.params as Params;
+  const [data, setData] = useState<Data>({} as Data);
+
+  useEffect(() => {
+    api.get(`/points/${routeParams.point_id}`).then((response) => {
+      setData(response.data);
+      console.log(response.data);
+    });
+  }, []);
+
+  // Navegação
   function handleNavigateBack() {
     navigation.goBack();
+  }
+
+  // Cria e-mail automaticamente ao clicar no botão
+  function handleComposeMail() {
+    MailComposer.composeAsync({
+      subject: "Interested on waste pick-up",
+      recipients: [data.point.email],
+    });
+  }
+
+  // Utiliza Whatsapp
+  function handleWhatsapp() {
+    Linking.openURL(
+      `whatsapp://send?phone=${data.point.whatsapp}&text=I'm interested about the waste pick-up service.`
+    );
+  }
+
+  if (!data.point) {
+    return null;
   }
 
   return (
@@ -34,25 +85,31 @@ const Detail = () => {
         <Image
           style={styles.pointImage}
           source={{
-            uri:
-              "https://c8.alamy.com/comp/BYP8C2/recycling-bank-for-bottles-cans-paper-and-plastics-at-a-branch-of-BYP8C2.jpg",
+            uri: data.point.image,
           }}
         />
-        <Text style={styles.pointName}>Mercadão Bão</Text>
-        <Text style={styles.pointItems}>Lâmpadas</Text>
+        <Text style={styles.pointName}>{data.point.name}</Text>
+        <Text style={styles.pointItems}>
+          {data.items.map((item) => item.title).join(", ")}
+        </Text>
+
         <View style={styles.address}>
-          <Text style={styles.addressTitle}>Address</Text>
-          <Text style={styles.addressContent}>Urussanga, SC</Text>
+          <Text style={styles.addressTitle}>Endereço:</Text>
+          <Text style={styles.addressContent}>
+            {data.point.city}, {data.point.uf}
+          </Text>
         </View>
       </View>
+
       <View style={styles.footer}>
-        <RectButton style={styles.button} onPress={() => {}}>
+        <RectButton style={styles.button} onPress={handleWhatsapp}>
           <FontAwesome name="whatsapp" size={20} color="#fff" />
-          <Text style={styles.buttonText}>whatsapp</Text>
+          <Text style={styles.buttonText}>Whatsapp</Text>
         </RectButton>
-        <RectButton style={styles.button} onPress={() => {}}>
+
+        <RectButton style={styles.button} onPress={handleComposeMail}>
           <Icon name="mail" size={20} color="#fff" />
-          <Text style={styles.buttonText}>e-mail</Text>
+          <Text style={styles.buttonText}>E-mail</Text>
         </RectButton>
       </View>
     </SafeAreaView>
