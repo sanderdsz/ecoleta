@@ -37,13 +37,6 @@
 
 The <strong>Ecoleta</strong> is a web and mobile app made to help our community to share and find recycle locations.
 
-<a id="documentation"></a>
-
-<!--
-## :books: Documentation
-Check the **[DOCUMENTATION](DOCUMENTATION.md)** to know how to use the basic commands for **TypeScript**, **Node**, **ReactJS** and **React Native**.
--->
-
 <a id="tech-used"></a>
 
 ## :rocket: Tech Used
