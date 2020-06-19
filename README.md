@@ -18,13 +18,13 @@
   </a>
 </p>
 
-## :heavy_check_mark: :computer: Web
+## :computer: Web
 
 <h1 align="center">
     <img alt="Web" src=".github/VideoWeb.gif" width="900px">
 </h1>
 
-## :heavy_check_mark: :iphone: Mobile
+## :iphone: Mobile
 
 <h1 align="center">
     <img alt="Mobile Home" src=".github/Home.png" width="300px">
@@ -105,3 +105,15 @@ This project was made with the following technologies:
 ## :memo: License
 
 This project is under MIT license. [LICENSE](LICENSE.md)
+
+## :mailbox_with_mail: Get in touch!
+
+<a href="https://sanderzuchinalli.netlify.app/" target="_blank" >
+  <img alt="Website - Sander Zuchinalli" src="https://img.shields.io/badge/Website--%23F8952D?style=social">
+</a>&nbsp;&nbsp;&nbsp;
+<a href="https://www.linkedin.com/in/sandersz/" target="_blank" >
+  <img alt="Linkedin - Sander Zuchinalli" src="https://img.shields.io/badge/Linkedin--%23F8952D?style=social&logo=linkedin">
+</a>&nbsp;&nbsp;&nbsp;
+<a href="mailto:sanderdsz@gmail.com" target="_blank" >
+  <img alt="Email - Sander Zuchinalli" src="https://img.shields.io/badge/Email--%23F8952D?style=social&logo=gmail">
+</a> 
