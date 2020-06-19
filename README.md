@@ -18,8 +18,17 @@
   </a>
 </p>
 
+## :heavy_check_mark: :computer: Web
+
 <h1 align="center">
     <img alt="Web" src=".github/VideoWeb.gif" width="900px">
+</h1>
+
+## :heavy_check_mark: :iphone: Mobile
+
+<h1 align="center">
+    <img alt="Mobile Home" src=".github/Home.png" width="300px">
+    <img alt="Mobile Detail" src=".github/Detail.svg" width="300px">
 </h1>
 
 # Index
@@ -77,15 +86,19 @@ This project was made with the following technologies:
   $ npm install
 
   # Start the server API
-  $ cd server
+  $ cd ./sources/server
   $ npm run dev
 
+  # Run database seeds and migrations
+  $ npm run knex:migrate
+  $ npm run knex:seed
+
   # Start the web application
-  $ cd web
+  $ cd ./sources/web
   $ npm start
 
   # Start the mobile application
-  $ cd mobile
+  $ cd ./sources/mobile
   $ npm start
 ```
 
