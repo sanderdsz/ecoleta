@@ -21,7 +21,7 @@
 ## :computer: Web
 
 <h1 align="center">
-    <img alt="Web" src=".github/VideoWeb.gif" width="500px">
+    <img alt="Web" src=".github/VideoWeb.gif" width="350px">
 </h1>
 
 ## :iphone: Mobile
