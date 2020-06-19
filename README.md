@@ -5,17 +5,17 @@
 </h3>
 
 <p align="center">
-  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/sanderdsz/ecoleta?color=%2304D361">
-
-  <img alt="Repository size" src="https://img.shields.io/github/repo-size/sanderdsz/ecoleta">
-	
   <a href="https://www.linkedin.com/in/sandersz/">
     <img alt="Made by Sander" src="https://img.shields.io/badge/made%20by-sanderdsz-%2304D361">
   </a>
 
-  <a href="https://github.com/sanderdsz/ecoleta/commits/master">
-    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/sanderdsz/ecoleta">
-  </a>
+  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/sanderdsz/ecoleta?color=%2304D361">
+
+  <img alt="Mobile" src="https://img.shields.io/badge/mobile-react--native-blue">
+
+  <img alt="Frontend" src="https://img.shields.io/badge/web-react-blueviolet">
+
+  <img alt="Backend" src="https://img.shields.io/badge/backend-node.js-green">
 </p>
 
 ## :computer: Web
