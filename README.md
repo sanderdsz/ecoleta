@@ -31,13 +31,9 @@
     <img alt="Mobile Detail" src=".github/Detail.svg" width="300px">
 </h1>
 
-<a id="about"></a>
-
 ## :bookmark: About
 
 The <strong>Ecoleta</strong> is a web and mobile app made to help our community to share and find recycle locations.
-
-<a id="tech-used"></a>
 
 ## :rocket: Tech Used
 
@@ -47,8 +43,6 @@ This project was made with the following technologies:
 - [Node.js](https://nodejs.org/en/)
 - [ReactJS](https://reactjs.org/)
 - [React Native](https://reactnative.dev/)
-
-<a id="how-to"></a>
 
 ## :fire: How to
 
