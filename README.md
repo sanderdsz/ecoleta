@@ -31,14 +31,6 @@
     <img alt="Mobile Detail" src=".github/Detail.svg" width="300px">
 </h1>
 
-# Index
-
-<!--- [Documentation](#documentation)-->
-
-- [About](#about)
-- [Tech Used](#tech-used)
-- [How-to](#how-to)
-
 <a id="about"></a>
 
 ## :bookmark: About
